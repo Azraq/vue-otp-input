@@ -3,10 +3,8 @@
     <input
       ref="input"
       :type="inputType"
-      min="0"
-      max="9"
       maxlength="1"
-      pattern="[0-9]"
+      pattern="[a-zA-Z0-9 ]+"
       v-model="model"
       :class="inputClasses"
       @input="handleOnChange"
@@ -87,7 +85,7 @@ export default {
       // Only allow characters 0-9, DEL, Backspace and Pasting
       const keyEvent = (event) || window.event;
       const charCode = (keyEvent.which) ? keyEvent.which : keyEvent.keyCode;
-      if (this.isCodeNumeric(charCode)
+      if (this.isCodeAlphaNumeric(charCode)
           || (charCode === 8)
           || (charCode === 86)
           || (charCode === 46)) {
@@ -96,9 +94,9 @@ export default {
         keyEvent.preventDefault();
       }
     },
-    isCodeNumeric(charCode) {
-      // numeric keys and numpad keys
-      return (charCode >= 48 && charCode <= 57) || (charCode >= 96 && charCode <= 105);
+    isCodeAlphaNumeric(charCode) {
+      // numeric keys, alpha keys and numpad keys 
+      return (charCode >= 48 && charCode <= 57) || (charCode >= 96 && charCode <= 105) || (charCode >= 65 && charCode <= 90);
     },
     handleOnPaste(event) {
       return this.$emit('on-paste', event);
